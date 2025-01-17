@@ -10,7 +10,7 @@ Implementation of realtime bloom post-process.
 
 ### Windows
 
-- Launch `run.bat`
+1. Launch `run.bat`
 
 ### Linux
 
