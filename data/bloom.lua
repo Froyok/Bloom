@@ -3,8 +3,8 @@ local COMMON = require( "common" )
 
 local BLOOM = {}
 
-BLOOM.InternalBlend = 0.7
-BLOOM.Intensity = 0.1
+BLOOM.InternalBlend = 0.5
+BLOOM.Intensity = 0.15
 BLOOM.UseAntiFlicker = true
 
 local Textures = {}
@@ -161,6 +161,7 @@ function BLOOM.Resize( NewWidth, NewHeight )
 end
 
 function BLOOM.Draw( InputTexture )
+	GL.PushEvent( "Bloom" )
 	BLOOM.BlurDownsample(
 		InputTexture,
 		Textures.ViewDownsamples,
@@ -173,6 +174,7 @@ function BLOOM.Draw( InputTexture )
 		ShaderUpsample,
 		BLOOM.InternalBlend
 	)
+	GL.PopEvent()
 
 	BLOOM.Composite( InputTexture )
 

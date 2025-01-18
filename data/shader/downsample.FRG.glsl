@@ -140,71 +140,22 @@ vec3 AveragePixelsPartial( vec2 InUV, vec2 InPixelSize, sampler2D InTexture )
 		InTexture
 	);
 
+	/*
 	vec3 Color = Center * 0.25
 		+ TopLeft * 0.1875
 		+ TopRight * 0.1875
 		+ BottomLeft * 0.1875
 		+ BottomRight * 0.1875;
+	*/
+
+	vec3 Color = Center * 0.2
+		+ TopLeft * 0.2
+		+ TopRight * 0.2
+		+ BottomLeft * 0.2
+		+ BottomRight * 0.2;
+
 
 	return Color;
-}
-
-//----------------------------------------
-// Neighbor color clamping
-//----------------------------------------
-const vec2 NeighborCoords[9] = vec2[9](
-	vec2( -1.0,  1.0 ), vec2( 0.0,  1.0 ), vec2(  1.0, -1.0 ),
-	vec2( -1.0,  0.0 ), vec2( 0.0,  0.0 ), vec2(  1.0,  0.0 ),
-	vec2( -1.0, -1.0 ), vec2( 0.0, -1.0 ), vec2(  1.0, -1.0 )
-);
-
-vec3 ClampColorToNeighbor(
-	vec3 InPreviousColor,
-	vec2 InUV,
-	vec2 InPixelSize,
-	sampler2D InCurrentTextureBuffer,
-	float Mask
-)
-{
-	vec2 Scale = InPixelSize;
-	vec3 MinColor = vec3(  9999.0 );
-	vec3 MaxColor = vec3( -9999.0 );
-
-	for( int i = 0; i < 9; i++ )
-	{
-		vec2 NextUV = InUV + (NeighborCoords[i] * Scale);
-		vec3 Color = Texel( InCurrentTextureBuffer, NextUV ).rgb * Mask;
-		MinColor = MinVec3( MinColor, Color );
-		MaxColor = MaxVec3( MaxColor, Color );
-	}
-
-	vec3 NewPreviousColor = clamp( InPreviousColor, MinColor, MaxColor );
-
-	return NewPreviousColor;
-}
-
-float ClampGrayscaleToNeighbor(
-	float InPreviousGrayscale,
-	vec2 InUV,
-	vec2 InPixelSize,
-	sampler2D InCurrentTextureBuffer
-)
-{
-	vec2 Scale = InPixelSize;
-	float MinColor =  9999.0;
-	float MaxColor = -9999.0;
-
-	for( int i = 0; i < 9; i++ )
-	{
-		vec2 NextUV = InUV + (NeighborCoords[i] * Scale);
-		float Grayscale = Texel( InCurrentTextureBuffer, NextUV ).r;
-		MinColor = min( MinColor, Grayscale );
-		MaxColor = max( MaxColor, Grayscale );
-	}
-
-	float New = clamp( InPreviousGrayscale, MinColor, MaxColor );
-
-	return New;
 }
 
 out vec4 FragColor;

@@ -2,14 +2,14 @@ local GL = require( "lib.frogl" )
 
 local SCENE = {}
 
-SCENE.AnimateOnX = false
-SCENE.AnimateOnY = false
+SCENE.AnimateOnX = true
+SCENE.AnimateOnY = true
 SCENE.AnimateX = 0.0
 SCENE.AnimateY = 0.0
-SCENE.RectangleWidth = 256
-SCENE.RectangleHeight = 256
+SCENE.RectangleWidth = 16
+SCENE.RectangleHeight = 16
 SCENE.Color = { 1, 1, 1 }
-SCENE.Intensity = 10.0
+SCENE.Intensity = 200.0
 
 local ShaderEmissive = nil
 
